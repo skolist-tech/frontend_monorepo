@@ -1,32 +1,55 @@
 import { Link } from "react-router-dom";
-import { AuthButton } from "@skolist/auth";
+import { Button } from "@skolist/ui";
+import { useAuth, UserMenu } from "@skolist/auth";
 
 export function Header() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-6">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-primary">Skolist</span>
+        <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/logo_with_name.png" 
+              alt="Skolist Logo" 
+              className="h-10"
+            />
           </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            <a
-              href="https://qgen.skolist.com"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              AI Paper Generator
-            </a>
-            <a
-              href="https://aitutor.skolist.com"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              AI Tutor
-            </a>
-          </nav>
         </div>
-        <div className="flex items-center gap-4">
-          <AuthButton loginPath="/login" />
-        </div>
+        <nav className="flex items-center gap-8">
+          <Link
+            to="/"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Home
+          </Link>
+          <Link
+            to="/vision"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Vision
+          </Link>
+          <Link
+            to="/product"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Product
+          </Link>
+          <Link
+            to="/contact"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Contact
+          </Link>
+          {isAuthenticated ? (
+            <UserMenu />
+          ) : (
+            <Button asChild>
+              <Link to="/login">Sign Up</Link>
+            </Button>
+          )}
+        </nav>
       </div>
     </header>
   );
