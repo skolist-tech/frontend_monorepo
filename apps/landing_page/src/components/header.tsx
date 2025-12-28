@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Button } from "@skolist/ui";
 import { AuthButton } from "@skolist/auth";
 
 export function Header() {
