@@ -1,5 +1,6 @@
 import { createBrowserClient } from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { CookieOptions } from "@supabase/ssr"
 
 let supabaseClient: SupabaseClient | null = null;
 
@@ -54,37 +55,41 @@ export function createClient(): SupabaseClient {
           };
         });
       },
-      setAll(cookiesToSet) {
-        if (typeof document === "undefined") return;
-        cookiesToSet.forEach(({ name, value, options }) => {
-          // Build cookie string with cross-domain support
-          let cookieString = `${name}=${value}`;
+      setAll(
+  cookiesToSet: {
+    name: string
+    value: string
+    options?: CookieOptions
+  }[]
+) {
+  if (typeof document === "undefined") return
 
-          // Set domain for cross-subdomain auth (e.g., .skolist.com)
-          if (cookieDomain) {
-            cookieString += `; Domain=${cookieDomain}`;
-          }
+  cookiesToSet.forEach(({ name, value, options }) => {
+    let cookieString = `${name}=${value}`
 
-          // Security options
-          cookieString += "; Path=/";
-          cookieString += "; SameSite=Lax";
+    if (cookieDomain) {
+      cookieString += `; Domain=${cookieDomain}`
+    }
 
-          // In production, cookies should be secure
-          if (
-            typeof window !== "undefined" &&
-            window.location.protocol === "https:"
-          ) {
-            cookieString += "; Secure";
-          }
+    cookieString += `; Path=${options?.path ?? "/"}`
+    cookieString += `; SameSite=${options?.sameSite ?? "Lax"}`
 
-          // Handle max-age
-          if (options?.maxAge !== undefined) {
-            cookieString += `; Max-Age=${options.maxAge}`;
-          }
 
-          document.cookie = cookieString;
-        });
-      },
+    if (
+      typeof window !== "undefined" &&
+      window.location.protocol === "https:"
+    ) {
+      cookieString += "; Secure"
+    }
+
+    if (options?.maxAge) {
+      cookieString += `; Max-Age=${options.maxAge}`
+    }
+
+    document.cookie = cookieString
+  })
+}
+
     },
   });
 }
