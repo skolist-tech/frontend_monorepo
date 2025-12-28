@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "./header";
+import { WhatsAppFloat } from "./whatsapp-float";
 
 export function Layout() {
   return (
@@ -8,6 +9,7 @@ export function Layout() {
       <main>
         <Outlet />
       </main>
+      <WhatsAppFloat />
     </div>
   );
 }
