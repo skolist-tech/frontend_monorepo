@@ -2,7 +2,7 @@ export function HeroSection() {
   return (
     <section className="bg-gray-100 py-16">
       <div className="container">
-        <h1 className="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl mb-6">
+        <h1 className="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-4xl mb-6">
           Empowering Schools to Provide Personalized Strategy-Based Learning for Every Child&apos;s Better Future
         </h1>
         <p className="text-center text-lg text-gray-600 max-w-4xl mx-auto mb-6">
