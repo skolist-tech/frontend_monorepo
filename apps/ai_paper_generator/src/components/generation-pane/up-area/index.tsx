@@ -1,0 +1,1 @@
+export { UpArea } from "./UpArea";

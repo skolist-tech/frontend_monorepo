@@ -1,0 +1,33 @@
+@import "@skolist/ui/globals.css";
+
+/* AI Paper Generator specific styles */
+
+/* Helper to make number input spin buttons always visible */
+.always-show-spin-button::-webkit-inner-spin-button,
+.always-show-spin-button::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #paper-preview-content,
+  #paper-preview-content * {
+    visibility: visible;
+  }
+  #paper-preview-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-shadow: none !important;
+  }
+
+  @page {
+    size: auto;
+    margin: 0mm;
+  }
+}
