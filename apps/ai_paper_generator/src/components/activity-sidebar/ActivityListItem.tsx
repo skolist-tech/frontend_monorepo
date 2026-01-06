@@ -5,7 +5,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button, Input } from "@skolist/ui";
-import { Trash2, Pencil, Check, X, FileText } from "lucide-react";
+import { Trash2, Pencil, Check, X } from "lucide-react";
 import type { Activity } from "@skolist/db";
 import { cn } from "@skolist/utils";
 
