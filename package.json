@@ -2,6 +2,7 @@
   "name": "@skolist/frontend",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "description": "Skolist frontend monorepo - Landing Page, AI Paper Generator, AI Tutor",
   "scripts": {
     "dev": "turbo dev",
