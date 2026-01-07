@@ -148,12 +148,21 @@ Breaking it can block the whole team.
 
 ### 1️⃣ Start from `stage`
 
+Clone the repo:
+
+```bash
+git clone https://github.com/skolist-tech/frontend_monorepo.git
+cd ./frontend_monorepo
+```
+
 Always sync first:
 
 ```bash
 git checkout stage
 git pull origin stage
+pnpm install
 ```
+
 
 ---
 
