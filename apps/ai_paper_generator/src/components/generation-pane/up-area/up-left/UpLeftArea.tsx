@@ -31,6 +31,11 @@ export function UpLeftArea() {
         />
       </div>
 
+      {/* Instructional label */}
+      <p className="flex-none text-sm font-medium text-muted-foreground">
+        Select Chapters / Topics / Concepts:
+      </p>
+
       {/* Show loading state */}
       {(isLoadingClasses || isLoadingSubjects || isLoadingTree) && (
         <div className="flex-none text-sm text-muted-foreground">
