@@ -138,6 +138,7 @@ Breaking it can block the whole team.
 | `stage`     | Seniors only | Staging    |
 | `feature/*` | Everyone     | Your work  |
 | `bugs/*`    | Everyone     | Bug fixes  |
+| `chore/*`   | Everyone     | Infra work |
 
 ❌ Never push to `main`
 ❌ Never push to `stage`
@@ -180,9 +181,15 @@ For bugs:
 git checkout -b bugs/<short-name>
 ```
 
+For Infra / Ops work:
+```bash
+git checkout -b chore/<short-name>
+```
+
 Examples:
 - `feature/add-login-ui`
 - `bugs/fix-navbar-overflow`
+- `chore/setup-ci`
 
 ---
 
