@@ -126,9 +126,11 @@ export function AutoDecideQuestion({ onAutoDecide }: AutoDecideQuestionProps) {
         {/* Sliders Column */}
         <div className="-mt-1 lg:col-span-7">
           <HardnessLevelSliders
-            levels={hardnessLevels}
-            onLevelChange={handleLevelChange}
-          />
+  levels={hardnessLevels}
+  totalQuestions={totalQuestions}
+  onLevelChange={handleLevelChange}
+/>
+
         </div>
       </div>
 
