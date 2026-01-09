@@ -12,9 +12,9 @@ import { ConceptSelectorTree } from "./ConceptSelector";
 export function UpLeftArea() {
   const {
     selection,
-    selectClass,
+    selectSchoolClass,
     selectSubject,
-    isLoadingClasses,
+    isLoadingSchoolClasses,
     isLoadingSubjects,
     isLoadingTree,
   } = useConceptContext();
@@ -23,7 +23,7 @@ export function UpLeftArea() {
     <div className="flex h-full flex-col space-y-4">
       {/* Class and Subject selectors side by side */}
       <div className="grid flex-none grid-cols-2 gap-4">
-        <ClassSelector value={selection.classId ?? ""} onChange={selectClass} />
+        <ClassSelector value={selection.classId ?? ""} onChange={selectSchoolClass} />
         <SubjectSelector
           value={selection.subjectId ?? ""}
           onChange={selectSubject}
@@ -37,7 +37,7 @@ export function UpLeftArea() {
       </p>
 
       {/* Show loading state */}
-      {(isLoadingClasses || isLoadingSubjects || isLoadingTree) && (
+      {(isLoadingSchoolClasses || isLoadingSubjects || isLoadingTree) && (
         <div className="flex-none text-sm text-muted-foreground">
           Loading...
         </div>

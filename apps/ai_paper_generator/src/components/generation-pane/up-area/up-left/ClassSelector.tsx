@@ -8,10 +8,10 @@ interface ClassSelectorProps {
 }
 
 export function ClassSelector({ value, onChange }: ClassSelectorProps) {
-  const { classes, isLoadingClasses, selectClass } = useConceptContext();
+  const { schoolClasses, isLoadingSchoolClasses, selectSchoolClass } = useConceptContext();
 
   const handleChange = (classId: string) => {
-    selectClass(classId);
+    selectSchoolClass(classId);
     onChange(classId);
   };
 
@@ -21,7 +21,7 @@ export function ClassSelector({ value, onChange }: ClassSelectorProps) {
       <select
         value={value}
         onChange={(e) => handleChange(e.target.value)}
-        disabled={isLoadingClasses}
+        disabled={isLoadingSchoolClasses}
         className={cn(
           "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2",
           "text-sm ring-offset-background",
@@ -30,9 +30,9 @@ export function ClassSelector({ value, onChange }: ClassSelectorProps) {
         )}
       >
         <option value="">
-          {isLoadingClasses ? "Loading classes..." : "Select class"}
+          {isLoadingSchoolClasses ? "Loading classes..." : "Select class"}
         </option>
-        {classes.map((cls) => (
+        {schoolClasses.map((cls) => (
           <option key={cls.id} value={cls.id}>
             {cls.name}
           </option>
