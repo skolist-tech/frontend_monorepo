@@ -49,6 +49,128 @@ export type Database = {
           },
         ]
       }
+      bank_questions: {
+        Row: {
+          answer_text: string
+          correct_mcq_option: number | null
+          created_at: string
+          explanation: string | null
+          figure: string | null
+          hardness_level:
+            | Database["public"]["Enums"]["hardness_level_enum"]
+            | null
+          id: string
+          marks: number | null
+          msq_option1_answer: boolean | null
+          msq_option2_answer: boolean | null
+          msq_option3_answer: boolean | null
+          msq_option4_answer: boolean | null
+          option1: string | null
+          option2: string | null
+          option3: string | null
+          option4: string | null
+          question_text: string
+          question_type: Database["public"]["Enums"]["question_type_enum"]
+          reference: string | null
+          subject_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          answer_text: string
+          correct_mcq_option?: number | null
+          created_at?: string
+          explanation?: string | null
+          figure?: string | null
+          hardness_level?:
+            | Database["public"]["Enums"]["hardness_level_enum"]
+            | null
+          id?: string
+          marks?: number | null
+          msq_option1_answer?: boolean | null
+          msq_option2_answer?: boolean | null
+          msq_option3_answer?: boolean | null
+          msq_option4_answer?: boolean | null
+          option1?: string | null
+          option2?: string | null
+          option3?: string | null
+          option4?: string | null
+          question_text: string
+          question_type: Database["public"]["Enums"]["question_type_enum"]
+          reference?: string | null
+          subject_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          answer_text?: string
+          correct_mcq_option?: number | null
+          created_at?: string
+          explanation?: string | null
+          figure?: string | null
+          hardness_level?:
+            | Database["public"]["Enums"]["hardness_level_enum"]
+            | null
+          id?: string
+          marks?: number | null
+          msq_option1_answer?: boolean | null
+          msq_option2_answer?: boolean | null
+          msq_option3_answer?: boolean | null
+          msq_option4_answer?: boolean | null
+          option1?: string | null
+          option2?: string | null
+          option3?: string | null
+          option4?: string | null
+          question_text?: string
+          question_type?: Database["public"]["Enums"]["question_type_enum"]
+          reference?: string | null
+          subject_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bank_questions_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bank_questions_concepts_maps: {
+        Row: {
+          bank_question_id: string
+          concept_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          bank_question_id?: string
+          concept_id?: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          bank_question_id?: string
+          concept_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bank_questions_concepts_maps_bank_question_id_fkey"
+            columns: ["bank_question_id"]
+            isOneToOne: false
+            referencedRelation: "bank_questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bank_questions_concepts_maps_concept_id_fkey"
+            columns: ["concept_id"]
+            isOneToOne: false
+            referencedRelation: "concepts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       boards: {
         Row: {
           created_at: string
@@ -107,44 +229,6 @@ export type Database = {
             columns: ["subject_id"]
             isOneToOne: false
             referencedRelation: "subjects"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      classes: {
-        Row: {
-          board_id: string
-          created_at: string
-          description: string | null
-          id: string
-          name: string
-          position: number
-          updated_at: string
-        }
-        Insert: {
-          board_id: string
-          created_at?: string
-          description?: string | null
-          id?: string
-          name: string
-          position: number
-          updated_at?: string
-        }
-        Update: {
-          board_id?: string
-          created_at?: string
-          description?: string | null
-          id?: string
-          name?: string
-          position?: number
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "classes_board_id_fkey"
-            columns: ["board_id"]
-            isOneToOne: false
-            referencedRelation: "boards"
             referencedColumns: ["id"]
           },
         ]
@@ -354,7 +438,7 @@ export type Database = {
       orgs: {
         Row: {
           address: string | null
-          board: string | null
+          board_id: string | null
           created_at: string
           email: string
           header_line: string | null
@@ -366,7 +450,7 @@ export type Database = {
         }
         Insert: {
           address?: string | null
-          board?: string | null
+          board_id?: string | null
           created_at?: string
           email: string
           header_line?: string | null
@@ -378,7 +462,7 @@ export type Database = {
         }
         Update: {
           address?: string | null
-          board?: string | null
+          board_id?: string | null
           created_at?: string
           email?: string
           header_line?: string | null
@@ -390,8 +474,8 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "orgs_board_fkey"
-            columns: ["board"]
+            foreignKeyName: "orgs_board_id_fkey"
+            columns: ["board_id"]
             isOneToOne: false
             referencedRelation: "boards"
             referencedColumns: ["id"]
@@ -515,37 +599,75 @@ export type Database = {
           },
         ]
       }
-      subjects: {
+      school_classes: {
         Row: {
-          class_id: string
+          board_id: string
           created_at: string
           description: string | null
           id: string
           name: string
+          position: number
           updated_at: string
         }
         Insert: {
-          class_id: string
+          board_id: string
           created_at?: string
           description?: string | null
           id?: string
           name: string
+          position: number
           updated_at?: string
         }
         Update: {
-          class_id?: string
+          board_id?: string
           created_at?: string
           description?: string | null
           id?: string
           name?: string
+          position?: number
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "subjects_class_id_fkey"
-            columns: ["class_id"]
+            foreignKeyName: "classes_board_id_fkey"
+            columns: ["board_id"]
             isOneToOne: false
-            referencedRelation: "classes"
+            referencedRelation: "boards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subjects: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          school_class_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          school_class_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          school_class_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subjects_school_class_id_fkey"
+            columns: ["school_class_id"]
+            isOneToOne: false
+            referencedRelation: "school_classes"
             referencedColumns: ["id"]
           },
         ]
@@ -601,9 +723,9 @@ export type Database = {
           org_id: string | null
           phone_num: string | null
           updated_at: string
+          user_entered_school_address: string | null
           user_entered_school_board: string | null
           user_entered_school_name: string | null
-          "user_entered_school-address": string | null
           user_type: string
         }
         Insert: {
@@ -618,9 +740,9 @@ export type Database = {
           org_id?: string | null
           phone_num?: string | null
           updated_at?: string
+          user_entered_school_address?: string | null
           user_entered_school_board?: string | null
           user_entered_school_name?: string | null
-          "user_entered_school-address"?: string | null
           user_type: string
         }
         Update: {
@@ -635,9 +757,9 @@ export type Database = {
           org_id?: string | null
           phone_num?: string | null
           updated_at?: string
+          user_entered_school_address?: string | null
           user_entered_school_board?: string | null
           user_entered_school_name?: string | null
-          "user_entered_school-address"?: string | null
           user_type?: string
         }
         Relationships: [

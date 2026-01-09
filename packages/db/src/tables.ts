@@ -21,9 +21,9 @@ export type Board = Tables["boards"]["Row"];
 export type InsertBoard = Tables["boards"]["Insert"];
 export type UpdateBoard = Tables["boards"]["Update"];
 
-export type Class = Tables["classes"]["Row"];
-export type InsertClass = Tables["classes"]["Insert"];
-export type UpdateClass = Tables["classes"]["Update"];
+export type SchoolClass = Tables["school_classes"]["Row"];
+export type InsertSchoolClass = Tables["school_classes"]["Insert"];
+export type UpdateSchoolClass = Tables["school_classes"]["Update"];
 
 export type Subject = Tables["subjects"]["Row"];
 export type InsertSubject = Tables["subjects"]["Insert"];

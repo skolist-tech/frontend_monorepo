@@ -15,7 +15,7 @@ import type { ReactNode } from "react";
 import type { Node } from "react-checkbox-tree";
 import {
   getSupabaseClient,
-  type Class,
+  type SchoolClass,
   type Subject,
   type Chapter,
   type Topic,
@@ -40,13 +40,13 @@ interface ConceptContextValue {
   selection: ConceptSelection;
 
   // Data
-  classes: Class[];
+  schoolClasses: SchoolClass[];
   subjects: Subject[];
   treeNodes: Node[];
 
   // Loading states
   isLoadingBoard: boolean;
-  isLoadingClasses: boolean;
+  isLoadingSchoolClasses: boolean;
   isLoadingSubjects: boolean;
   isLoadingTree: boolean;
 
@@ -54,7 +54,7 @@ interface ConceptContextValue {
   error: string | null;
 
   // Actions
-  selectClass: (classId: string) => void;
+  selectSchoolClass: (classId: string) => void;
   selectSubject: (subjectId: string) => void;
   setChecked: (checked: string[]) => void;
   setExpanded: (expanded: string[]) => void;
@@ -153,7 +153,7 @@ export function ConceptProvider({ children }: { children: ReactNode }) {
   });
 
   // Data state
-  const [classes, setClasses] = useState<Class[]>([]);
+  const [schoolClasses, setSchoolClasses] = useState<SchoolClass[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -161,7 +161,7 @@ export function ConceptProvider({ children }: { children: ReactNode }) {
 
   // Loading states
   const [isLoadingBoard, setIsLoadingBoard] = useState(true);
-  const [isLoadingClasses, setIsLoadingClasses] = useState(false);
+  const [isLoadingSchoolClasses, setIsLoadingSchoolClasses] = useState(false);
   const [isLoadingSubjects, setIsLoadingSubjects] = useState(false);
   const [isLoadingTree, setIsLoadingTree] = useState(false);
 
@@ -203,12 +203,12 @@ export function ConceptProvider({ children }: { children: ReactNode }) {
         if (userData?.org_id) {
           const { data: orgData, error: orgError } = await supabase
             .from("orgs")
-            .select("board")
+            .select("board_id")
             .eq("id", userData.org_id)
             .single();
 
           if (orgError) throw orgError;
-          boardId = orgData?.board ?? null;
+          boardId = orgData?.board_id ?? null;
         } else {
           // Use user's manually entered board
           boardId = userData?.user_entered_school_board ?? null;
@@ -218,16 +218,16 @@ export function ConceptProvider({ children }: { children: ReactNode }) {
 
         // Fetch classes for this board
         if (boardId) {
-          setIsLoadingClasses(true);
+          setIsLoadingSchoolClasses(true);
           const { data: classData, error: classError } = await supabase
-            .from("classes")
+            .from("school_classes")
             .select("*")
             .eq("board_id", boardId)
             .order("position");
 
           if (classError) throw classError;
-          setClasses(classData || []);
-          setIsLoadingClasses(false);
+          setSchoolClasses(classData || []);
+          setIsLoadingSchoolClasses(false);
         }
       } catch (err) {
         console.error("Error fetching board:", err);
@@ -257,7 +257,7 @@ export function ConceptProvider({ children }: { children: ReactNode }) {
         const { data, error: subjectError } = await supabase
           .from("subjects")
           .select("*")
-          .eq("class_id", selection.classId)
+          .eq("school_class_id", selection.classId)
           .order("name");
 
         if (subjectError) throw subjectError;
@@ -350,7 +350,7 @@ export function ConceptProvider({ children }: { children: ReactNode }) {
   // Actions
   // =========================================================
 
-  const selectClass = useCallback((classId: string) => {
+  const selectSchoolClass = useCallback((classId: string) => {
     setSelection((prev) => ({
       ...prev,
       classId: classId || null,
@@ -403,15 +403,15 @@ export function ConceptProvider({ children }: { children: ReactNode }) {
 
   const value: ConceptContextValue = {
     selection,
-    classes,
+    schoolClasses,
     subjects,
     treeNodes,
     isLoadingBoard,
-    isLoadingClasses,
+    isLoadingSchoolClasses,
     isLoadingSubjects,
     isLoadingTree,
     error,
-    selectClass,
+    selectSchoolClass,
     selectSubject,
     setChecked,
     setExpanded,
