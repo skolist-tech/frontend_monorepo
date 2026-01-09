@@ -4,32 +4,35 @@ import { cn } from "@skolist/utils";
 
 interface HardnessLevelSlidersProps {
   levels: Record<HardnessLevel, number>;
+  totalQuestions: number | string; // ✅ allow string input
   onLevelChange: (level: HardnessLevel, value: number) => void;
 }
 
 export function HardnessLevelSliders({
   levels,
+  totalQuestions,
   onLevelChange,
 }: HardnessLevelSlidersProps) {
   const total = levels.easy + levels.medium + levels.hard;
   const isValid = total === 100 || total === 0;
 
-  // Calculate slider values from percentages
-  // v1 = easy
-  // v2 = easy + medium
+  // Slider positions
   const sliderValue = [levels.easy, levels.easy + levels.medium];
+
+  // ✅ CORRECT numeric conversion
+  const numericTotal = Number(totalQuestions);
+  const safeTotal = Number.isFinite(numericTotal) ? numericTotal : 0;
+
+  const easyCount = Math.round((safeTotal * levels.easy) / 100);
+  const mediumCount = Math.round((safeTotal * levels.medium) / 100);
+  const hardCount = Math.round((safeTotal * levels.hard) / 100);
 
   const handleSliderChange = (values: number[]) => {
     const [v1 = 33, v2 = 66] = values;
 
-    // Calculate percentages from slider values
-    const easy = v1;
-    const medium = v2 - v1;
-    const hard = 100 - v2;
-
-    onLevelChange("easy", easy);
-    onLevelChange("medium", medium);
-    onLevelChange("hard", hard);
+    onLevelChange("easy", v1);
+    onLevelChange("medium", v2 - v1);
+    onLevelChange("hard", 100 - v2);
   };
 
   return (
@@ -48,7 +51,6 @@ export function HardnessLevelSliders({
 
       <div className="px-1 pb-2 pt-2">
         <Slider
-          defaultValue={[33, 66]}
           value={sliderValue}
           max={100}
           step={1}
@@ -67,15 +69,23 @@ export function HardnessLevelSliders({
       <div className="flex justify-between text-xs text-muted-foreground">
         <div className="flex items-center gap-1.5">
           <div className="h-3 w-3 rounded-full border border-green-500 bg-green-500/20" />
-          <span>Easy ({levels.easy}%)</span>
+          <span>
+            Easy ({levels.easy}% • {easyCount} questions)
+          </span>
         </div>
+
         <div className="flex items-center gap-1.5">
           <div className="h-3 w-3 rounded-full border border-yellow-500 bg-yellow-500/20" />
-          <span>Medium ({levels.medium}%)</span>
+          <span>
+            Medium ({levels.medium}% • {mediumCount} questions)
+          </span>
         </div>
+
         <div className="flex items-center gap-1.5">
           <div className="h-3 w-3 rounded-full border border-orange-500 bg-orange-500/20" />
-          <span>Hard ({levels.hard}%)</span>
+          <span>
+            Hard ({levels.hard}% • {hardCount} questions)
+          </span>
         </div>
       </div>
 
