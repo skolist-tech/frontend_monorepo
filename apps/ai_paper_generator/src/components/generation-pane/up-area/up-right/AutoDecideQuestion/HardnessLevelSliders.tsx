@@ -4,13 +4,13 @@ import { cn } from "@skolist/utils";
 
 interface HardnessLevelSlidersProps {
   levels: Record<HardnessLevel, number>;
-  totalQuestions: number | string; // ✅ allow string input
+  totalQuestions?: number; // optional safety
   onLevelChange: (level: HardnessLevel, value: number) => void;
 }
 
 export function HardnessLevelSliders({
   levels,
-  totalQuestions,
+  totalQuestions = 0,
   onLevelChange,
 }: HardnessLevelSlidersProps) {
   const total = levels.easy + levels.medium + levels.hard;
@@ -19,13 +19,15 @@ export function HardnessLevelSliders({
   // Slider positions
   const sliderValue = [levels.easy, levels.easy + levels.medium];
 
-  // ✅ CORRECT numeric conversion
-  const numericTotal = Number(totalQuestions);
-  const safeTotal = Number.isFinite(numericTotal) ? numericTotal : 0;
+  // ✅ Ensure numeric + reactive
+  const questions = Number(totalQuestions) || 0;
 
-  const easyCount = Math.round((safeTotal * levels.easy) / 100);
-  const mediumCount = Math.round((safeTotal * levels.medium) / 100);
-  const hardCount = Math.round((safeTotal * levels.hard) / 100);
+  const easyCount =
+    questions > 0 ? Math.round((questions * levels.easy) / 100) : 0;
+  const mediumCount =
+    questions > 0 ? Math.round((questions * levels.medium) / 100) : 0;
+  const hardCount =
+    questions > 0 ? Math.round((questions * levels.hard) / 100) : 0;
 
   const handleSliderChange = (values: number[]) => {
     const [v1 = 33, v2 = 66] = values;
