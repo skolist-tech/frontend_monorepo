@@ -3,8 +3,7 @@ export function HeroSection() {
     <section className="bg-gray-100 py-16">
       <div className="container">
         <h1 className="mb-6 text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-4xl">
-          Empowering Schools to Provide Personalized Strategy-Based Learning for
-          Every Child&apos;s Better Future
+        Empowering Schools with Personalised Student Strategies
         </h1>
         <p className="mx-auto mb-6 max-w-4xl text-center text-lg text-gray-600">
           Skolist helps schools identify each student&apos;s learning gaps and
