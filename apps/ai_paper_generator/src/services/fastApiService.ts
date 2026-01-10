@@ -52,6 +52,11 @@ export const fastApiService = {
         );
       }
 
+      // 201 Created returns empty body, so don't try to parse JSON
+      if (response.status === 201) {
+        return { success: true };
+      }
+
       return await response.json();
     } catch (error) {
       console.error("Error generating questions:", error);
